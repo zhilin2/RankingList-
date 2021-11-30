@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -13,6 +12,9 @@ public class RankSort<T>
 	private int curIndex;
 	private int maxIndex;
 
+	/// <summary>
+    /// 排序辅助结构体
+    /// </summary>
 	private struct Group
 	{
 		public Group(int i, int s, int l)
@@ -26,8 +28,10 @@ public class RankSort<T>
 	/// <summary>
 	/// 对最大值排序 
 	/// </summary>
-	/// <param name="arr"></param>
-	private void Sort(Group[] arr, T[] datas, Comparer action)
+	/// <param name="arr">组结构</param>
+	/// <param name="datas">数据</param>
+	/// <param name="action">比较方法</param>
+	private void SortMax(Group[] arr, T[] datas, Comparer action)
 	{
 		Group temp;
 		for (int i = 0; i < arr.Length; i++)
@@ -45,11 +49,11 @@ public class RankSort<T>
 	}
 
 	/// <summary>
-	/// 
+	/// 初始调用接口
 	/// </summary>
-	/// <param name="arr"></param>
-	/// <param name="num"></param>
-	/// <param name="action"></param>
+	/// <param name="arr">被排序的数据</param>
+	/// <param name="num">排序的的数量</param>
+	/// <param name="action">比较方法</param>
 	/// <returns></returns>
 	public T[] Sort(T[] arr, int num, Comparer action)
 	{
@@ -81,7 +85,7 @@ public class RankSort<T>
 			arr[i * groupCount] = temp;
 			indexs[i] = new Group(i * groupCount, i * groupCount, length);
 		}
-		Sort(indexs, arr, action);
+		SortMax(indexs, arr, action);
 		for (int i = 0; i < num-1; i++)
 		{
 			if(indexs[i].length>1)
